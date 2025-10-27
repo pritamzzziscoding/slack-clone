@@ -13,6 +13,7 @@ const syncUser = inngest.createFunction(
     
     async ({event}) => {
         await connectDB(ENV.MONGO_URI)
+        console.log("Creating new user")
 
         //extracting the necessary data from the event object
         const {id, email_addresses, first_name, last_name, image_url} = event.data
@@ -35,6 +36,7 @@ const deleteUserFromDB = inngest.createFunction(
 
     async ({event}) => {
         await connectDB(ENV.MONGO_URI)
+        console.log("Creating new user")
         const {id} = event.data // get the id from the event.data object
         await User.deleteOne({clerkId : id})
         // await deleteStreamUser(id.toString());
