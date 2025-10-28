@@ -15,7 +15,7 @@ app.use(clerkMiddleware()) // req.auth will be available in the object user obje
 app.use("/api/inngest", serve({ client: inngest, functions }));
 
 app.get("/", (req,res) => {
-    res.send("Hello World!!!!")
+    res.send("Hello World this is the server!!!!")
 })
 
 

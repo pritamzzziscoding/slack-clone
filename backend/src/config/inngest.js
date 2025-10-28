@@ -12,22 +12,28 @@ const syncUser = inngest.createFunction(
     {event : "clerk/user.created"}, //this has to be exactly the same
     
     async ({event}) => {
-        await connectDB(ENV.MONGO_URI)
-        console.log("Creating new user")
 
-        //extracting the necessary data from the event object
-        const {id, email_addresses, first_name, last_name, image_url} = event.data
+        try {
+            await connectDB(ENV.MONGO_URI)
+            console.log("Creating new user")
 
-        const newUser = {
-            clerkId : id,
-            email : email_addresses[0].email_address,
-            name : `${first_name} ${last_name}`,
-            image : image_url
+            //extracting the necessary data from the event object
+            const {id, email_addresses, first_name, last_name, image_url} = event.data
+
+            const newUser = {
+                clerkId : id,
+                email : email_addresses[0].email_address,
+                name : `${first_name} ${last_name}`,
+                image : image_url
+            }
+
+            console.log(newUser)
+
+            await User.create(newUser)
+        } catch (error) {
+            console.log("Error Creating User")
         }
-
-        console.log(newUser)
-
-        await User.create(newUser)
+        
     }
 )
 
